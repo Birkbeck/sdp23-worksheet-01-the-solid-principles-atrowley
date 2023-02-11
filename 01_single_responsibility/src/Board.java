@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-//test
+//test2
 
 public class Board {
     List<String> spots;
