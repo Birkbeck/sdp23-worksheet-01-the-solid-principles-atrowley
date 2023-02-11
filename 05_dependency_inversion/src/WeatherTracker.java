@@ -2,20 +2,22 @@ public class WeatherTracker {
     String currentConditions;
     Phone phone;
     Emailer emailer;
+    Device rainyAlerter;
+    Device sunnyAlerter;
 
     public WeatherTracker() {
-        phone = new Phone();
-        emailer = new Emailer();
+        rainyAlerter = new Phone();
+        sunnyAlerter = new Emailer();
     }
 
     public void setCurrentConditions(String weatherDescription) {
         this.currentConditions = weatherDescription;
         if (weatherDescription == "rainy") {
-            String alert = phone.generateWeatherAlert(weatherDescription);
+            String alert = rainyAlerter.generateWeatherAlert(weatherDescription);
             System.out.print(alert);
         }
         if (weatherDescription == "sunny") {
-            String alert = emailer.generateWeatherAlert(weatherDescription);
+            String alert = sunnyAlerter.generateWeatherAlert(weatherDescription);
             System.out.print(alert);
         }
     }
