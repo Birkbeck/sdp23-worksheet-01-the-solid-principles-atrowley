@@ -1,4 +1,4 @@
-public class Eagle implements Bird {
+public class Eagle implements Bird, FlyingBehaviour{
     String currentLocation;
     int numberOfFeathers;
 

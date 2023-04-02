@@ -1,45 +1,69 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements BoardTemplate {
+
+    DisplayController displayController;
+    int boardWidth;
     List<String> spots;
 
+    /**
+     * Constructor with no arguments to satisfy original tests
+     */
     public Board() {
+        this(3, new BoardConsolePrinter());
+    }
+
+    /**
+     * Constructor which allows different board sizes
+     * @param boardWidth width of board (total size will be boardWidth * boardWidth)
+     */
+    public Board(int boardWidth, DisplayController displayController) {
+        this.boardWidth = boardWidth;
+        this.displayController = displayController;
         this.spots = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < (boardWidth * boardWidth); i++) {
             this.spots.add(String.valueOf(i));
         }
+
+    }
+
+    private List<String> getRow(int rowNum) {
+        List<String> row = new ArrayList<>();
+        int rowStart = boardWidth * (rowNum - 1);
+        int rowEnd = (boardWidth * rowNum) - 1;
+        for(int i = rowStart; i <= rowEnd; i++){
+            row.add(this.spots.get(i));
+        }
+        return row;
     }
 
     public List<String> firstRow() {
-        List<String> firstRow = new ArrayList<>();
-        firstRow.add(this.spots.get(0));
-        firstRow.add(this.spots.get(1));
-        firstRow.add(this.spots.get(2));
-        return firstRow;
+        return getRow(1);
     }
 
     public List<String> secondRow() {
-        List<String> secondRow = new ArrayList<>();
-        secondRow.add(this.spots.get(3));
-        secondRow.add(this.spots.get(4));
-        secondRow.add(this.spots.get(5));
-        return secondRow;
+        return  getRow(2);
     }
 
     public List<String> thirdRow() {
-        List<String> thirdRow = new ArrayList<>();
-        thirdRow.add(this.spots.get(6));
-        thirdRow.add(this.spots.get(7));
-        thirdRow.add(this.spots.get(8));
-        return thirdRow;
+        return  getRow(3);
+    }
+
+    public String getSpot(int index){
+        return this.spots.get(index);
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
+    public List<String> getSpots() {
+        return spots;
     }
 
     // Poor code — can you improve this?
     public void display() {
-        String formattedFirstRow = this.spots.get(0) + " | " + this.spots.get(1) + " | " + this.spots.get(2) + "\n"
-            + this.spots.get(3) + " | " + this.spots.get(4) + " | " + this.spots.get(5) + "\n"
-            + this.spots.get(6) + " | " + this.spots.get(7) + " | " + this.spots.get(8);
-        System.out.print(formattedFirstRow);
+        this.displayController.displayBoard(this);
     }
 }

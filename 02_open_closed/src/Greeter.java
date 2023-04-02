@@ -1,19 +1,21 @@
 public class Greeter {
     String formality;
+    Greeting greeting;
+
+    public Greeter() {
+        this(new StandardGreeting());
+    }
+
+    public Greeter(Greeting greeting){
+        this.greeting = greeting;
+    }
 
     public String greet() {
-        if (this.formality == "formal") {
-            return "Good evening";
-        } else if (this.formality == "casual") {
-            return "Goodday?";
-        } else if (this.formality == "intimate") {
-            return "Hello darling!";
-        } else {
-            return "Hello.";
-        }
+       return greeting.sayGreeting(formality);
     }
 
     public void setFormality(String formality) {
         this.formality = formality;
     }
 }
+
