@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 public class WeatherTrackerTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Test
     public void testReturnsCurrentWeather() {
-        WeatherTracker tracker = new WeatherTracker();
+        WeatherTracker tracker = new WeatherTracker(List.of(new Phone(),new Emailer()));
         tracker.setCurrentConditions("rainy");
 
         assertEquals("rainy", tracker.currentConditions);
@@ -18,7 +19,7 @@ public class WeatherTrackerTest {
 
     @Test
     public void testAlertsPhoneUsersWhenRaining() {
-        WeatherTracker tracker = new WeatherTracker();
+        WeatherTracker tracker = new WeatherTracker(List.of(new Phone(),new Emailer()));
         System.setOut(new PrintStream(outContent));
         tracker.setCurrentConditions("rainy");
 
@@ -27,7 +28,7 @@ public class WeatherTrackerTest {
 
     @Test
     public void testAlertsViaEmailWhenSunny() {
-        WeatherTracker tracker = new WeatherTracker();
+        WeatherTracker tracker = new WeatherTracker(List.of(new Phone(),new Emailer()));
         System.setOut(new PrintStream(outContent));
         tracker.setCurrentConditions("sunny");
 

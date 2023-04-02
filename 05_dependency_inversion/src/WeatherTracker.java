@@ -1,22 +1,17 @@
+import java.util.List;
+
 public class WeatherTracker {
     String currentConditions;
-    Phone phone;
-    Emailer emailer;
+    List<Notifier> notifiers;
 
-    public WeatherTracker() {
-        phone = new Phone();
-        emailer = new Emailer();
+    public WeatherTracker(List<Notifier> notifiers) {
+        this.notifiers = notifiers;
     }
 
     public void setCurrentConditions(String weatherDescription) {
         this.currentConditions = weatherDescription;
-        if (weatherDescription == "rainy") {
-            String alert = phone.generateWeatherAlert(weatherDescription);
-            System.out.print(alert);
-        }
-        if (weatherDescription == "sunny") {
-            String alert = emailer.generateWeatherAlert(weatherDescription);
-            System.out.print(alert);
+        for(Notifier n : notifiers){
+            n.sendNotification(weatherDescription);
         }
     }
 }
